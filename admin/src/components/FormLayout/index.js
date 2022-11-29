@@ -120,6 +120,8 @@ const FormLayout = ( { fields, gap } ) => {
                 ...strapiFields,
                 uid: InputUID,
               } }
+              // Disable if input is custom ID field
+              disabled={input.name.indexOf('.id') !== -1}
             />
           </GridItem>
         );
