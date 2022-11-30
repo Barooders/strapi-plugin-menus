@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
 import { stopPropagation } from '@strapi/helper-plugin';
-import { Button, Flex, IconButton, Typography } from '@strapi/design-system';
+import { Button, Flex, IconButton, Typography, Avatar } from '@strapi/design-system';
 import { ChevronDown, ChevronUp, Plus, PlusCircle, Trash } from '@strapi/icons';
 
 import { getBoxProps, getTrad, menuItemProps } from '../../utils';
@@ -93,17 +93,31 @@ const TreeMenuItem = forwardRef( ( {
         isActive={ isActive }
         onClick={ onClick }
       >
-        <Flex justifyContent="space-between">
-          <Label>
-            { !! data.title ? data.title : (
-              <Typography textColor="neutral400" style={ { fontStyle: 'italic' } }>
-                { formatMessage( {
-                  id: getTrad( 'ui.untitled' ),
-                  defaultMessage: 'Untitled',
-                } ) }
-              </Typography>
-            ) }
-          </Label>
+          <Flex justifyContent="space-between">
+            <Label>
+              <Flex>
+                {data.card_image?.url && (
+                  <Avatar src={data.card_image?.url} />
+                )}
+                { data.item_type === 'card' && (
+                  <span
+                    style={{
+                      paddingRight: '0.5rem',
+                      paddingLeft: '0.5rem',
+                      fontWeight: 500
+                    }}
+                  >(card)&nbsp;</span>
+                )}
+                { !! data.title ? data.title : (
+                  <Typography textColor="neutral400" style={ { fontStyle: 'italic' } }>
+                    { formatMessage( {
+                      id: getTrad( 'ui.untitled' ),
+                      defaultMessage: 'Untitled',
+                    } ) }
+                  </Typography>
+                ) }
+              </Flex>
+            </Label>
           { isActive && <Toolbar actions={ actions } /> }
         </Flex>
       </Wrapper>
