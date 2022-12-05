@@ -99,6 +99,44 @@ const EditMenuItem = ( { data, fields } ) => {
         clonedFields.link.unshift( IDField )
     }
 
+
+    /**
+     * It sets `link` as default `item_type`.
+     * @returns {void}
+     */
+    const setLinkAsDefaultItemType = () => {
+      const { id } = data
+      const { items } = modifiedData
+      const itemById = items.filter((item) => item.id === id)[0]
+
+      if (!itemById)
+        return
+
+      itemById.item_type = itemById.item_type ?? 'link'
+    }
+
+    /**
+     * It handle whether the `item_type` field should be displayed or not.
+     * @returns {void}
+     */
+    const handleItemTypeFieldDisplay = () => {
+      const { id } = data
+      const { items } = modifiedData
+      const itemById = items.filter((item) => item.id === id)[0]
+
+      if (!itemById)
+        return
+
+
+      const nestingLevel = getItemNestingLevel(items, itemById)
+
+      if (nestingLevel === 4) {
+        clonedFields.link = clonedFields.link.filter((link) => (
+          link?.input?.name !== 'item_type'
+        ))
+      }
+    }
+
     /**
      * It handle whether the tab `card` (and its fields) should be displayed or not.
      * @returns {void}
@@ -107,6 +145,10 @@ const EditMenuItem = ( { data, fields } ) => {
       const { id } = data
       const { items } = modifiedData
       const itemById = items.filter((item) => item.id === id)[0]
+
+      if (!itemById)
+        return
+
       
       const { item_type } = itemById
 
@@ -130,7 +172,11 @@ const EditMenuItem = ( { data, fields } ) => {
       const { id } = data
       const { items } = modifiedData
       const itemById = items.filter((item) => item.id === id)[0]
-      
+
+      if (!itemById)
+        return
+
+        
       const nestingLevel = getItemNestingLevel(items, itemById)
 
       // Items of level 3 or 4 cannot be parent of card item
@@ -156,6 +202,10 @@ const EditMenuItem = ( { data, fields } ) => {
       const { items } = modifiedData
       const itemById = items.filter((item) => item.id === id)[0]
       
+      if (!itemById)
+        return
+
+
       const { item_type } = itemById
       
       const nestingLevel = getItemNestingLevel(items, itemById)
@@ -211,6 +261,9 @@ const EditMenuItem = ( { data, fields } ) => {
 
     addIDField()
 
+    setLinkAsDefaultItemType()
+
+    handleItemTypeFieldDisplay()
     handleCardFieldsDisplay()
     handleIsPinnedDisplay()
     handleExcludeCardFieldDisplay()
