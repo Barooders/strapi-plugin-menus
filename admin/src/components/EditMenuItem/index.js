@@ -152,43 +152,9 @@ const EditMenuItem = ( { data, fields } ) => {
 
       const nestingLevel = getItemNestingLevel(items, itemById)
 
-      if (
-        // Card fields should be hidden unless selected item_type is 'card'
-        item_type !== 'card'
-        // An item of level 4 cannot be a card
-        || nestingLevel === 4
-      )
+      // Card fields should be hidden unless selected item_type is 'card'
+      if ( item_type !== 'card' )
         delete clonedFields.card
-    }
-    
-
-    /**
-     * It handle whether the field `excluded_card_ids` should be displayed or not.
-     * @returns {void}
-     */
-    const handleExcludeCardFieldDisplay = () => {
-      const { id } = data
-      const { items } = modifiedData
-      const itemById = items.filter((item) => item.id === id)[0]
-
-      if (!itemById)
-        return
-
-        
-      const nestingLevel = getItemNestingLevel(items, itemById)
-
-      // Items of level 3 or 4 cannot be parent of card item
-      // Hence they cannot exclude any card.
-      if (
-        nestingLevel === 3
-        || nestingLevel === 4
-      ) {
-        if (clonedFields.link) {
-          clonedFields.link = clonedFields.link.filter((link) => (
-            link?.input?.name !== 'excluded_card_ids'
-          ))
-        }
-      }
     }
 
     /**
@@ -264,7 +230,6 @@ const EditMenuItem = ( { data, fields } ) => {
     handleItemTypeFieldDisplay()
     handleCardFieldsDisplay()
     handleIsPinnedDisplay()
-    handleExcludeCardFieldDisplay()
 
     prioritizeItemTypeInput()
 
