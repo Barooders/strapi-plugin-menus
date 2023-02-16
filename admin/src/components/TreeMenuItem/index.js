@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
-import { Flex, Typography, Avatar } from '@strapi/design-system';import ChevronDown from '@strapi/icons/ChevronDown';
+import { Flex, Typography, Avatar } from '@strapi/design-system';
 import { ChevronDown, ChevronUp, Plus, Trash } from '@strapi/icons';
 
 import { getBoxProps, getTrad, menuItemProps } from '../../utils';
