@@ -231,6 +231,21 @@ const EditView = ( { history, location, match } ) => {
     }
   };
 
+  const clearCache = () => {
+    fetch('/rest-cache/purge', {
+      method: 'POST',
+      body: JSON.stringify({
+        contentType: "plugin::menus.menu",
+        params:{},
+        wildcard:true
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('jwtToken'))}`
+      }
+    })
+  }
+
   return (
     <Layout
       isLoading={ ! isCreating && status !== 'success' }
@@ -279,6 +294,9 @@ const EditView = ( { history, location, match } ) => {
                             } ) }
                           </Button>
                         }
+                        secondaryAction={<Button onClick={clearCache} variant="danger-light">
+                          Clear cache
+                        </Button>}
                       />
                       <ContentLayout>
                         <Box paddingBottom={ 10 }>
