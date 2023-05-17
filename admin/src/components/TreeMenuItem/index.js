@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
 import { Flex, Typography, Avatar } from '@strapi/design-system';
-import { ChevronDown, ChevronUp, Plus, Trash } from '@strapi/icons';
+import { ChevronDown, ChevronRight, Plus, Trash, ArrowUp, ArrowDown } from '@strapi/icons';
 
 import { getBoxProps, getTrad, menuItemProps } from '../../utils';
 import { Toolbar } from '../';
@@ -24,6 +24,7 @@ const TreeMenuItem = forwardRef( ( {
   onMoveDown,
 }, ref ) => {
   const { formatMessage } = useIntl();
+  const [isOpen, setIsOpen] = useState(true);
 
   let bgColor, borderColor;
 
@@ -57,7 +58,7 @@ const TreeMenuItem = forwardRef( ( {
     },
     {
       hidden: isLast,
-      icon: <ChevronDown />,
+      icon: <ArrowDown />,
       label: formatMessage( {
         id: getTrad( 'ui.move.menuItem.down' ),
         defaultMessage: 'Move item down',
@@ -66,7 +67,7 @@ const TreeMenuItem = forwardRef( ( {
     },
     {
       hidden: isFirst,
-      icon: <ChevronUp />,
+      icon: <ArrowUp />,
       label: formatMessage( {
         id: getTrad( 'ui.move.menuItem.up' ),
         defaultMessage: 'Move item up',
@@ -81,6 +82,18 @@ const TreeMenuItem = forwardRef( ( {
         defaultMessage: 'Delete menu item',
       } ),
       onClick: onDelete,
+    },
+    {
+      hidden: isOpen,
+      icon: <ChevronRight />,
+      label: 'Show children',
+      onClick: () => setIsOpen(true)
+    },
+    {
+      hidden: !isOpen,
+      icon: <ChevronDown />,
+      label: 'Hide children',
+      onClick: () => setIsOpen(false)
     },
   ];
 
@@ -120,7 +133,7 @@ const TreeMenuItem = forwardRef( ( {
           { isActive && <Toolbar actions={ actions } /> }
         </Flex>
       </Wrapper>
-      { children }
+      { isOpen && children }
     </div>
   );
 } );
