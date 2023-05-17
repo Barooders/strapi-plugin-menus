@@ -248,6 +248,8 @@ const EditMenuItem = ( { data, fields } ) => {
       borderRadius="4px"
       padding={ 6 }
       shadow="filterShadow"
+      overflow="scroll"
+      maxHeight="500px"
     >
       <Typography variant="delta">
         { formatMessage( {
