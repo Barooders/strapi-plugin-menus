@@ -24,7 +24,7 @@ const TreeMenuItem = forwardRef( ( {
   onMoveDown,
 }, ref ) => {
   const { formatMessage } = useIntl();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   let bgColor, borderColor;
 
